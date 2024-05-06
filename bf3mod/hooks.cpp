@@ -27,11 +27,33 @@ bool hooks::install()
 	a6 - vec3 projectile end
 	a7 - float suppression modifier
 */
-typedef char* (__cdecl* fb__suppressEnemies)(int a1, int a2, int a3, int a4, int a5, int a6, float a7);
+typedef char* (HACK_CDECL* fb__suppressEnemies)(int a1, int a2, int a3, int a4, int a5, int a6, float a7);
 fb__suppressEnemies o__fb__suppressEnemies = 0;
-char* __cdecl hkfb__suppressEnemies(int a1, int a2, int a3, int a4, int a5, int a6, float a7)
+char* HACK_CDECL hkfb__suppressEnemies(int a1, int a2, int a3, int a4, int a5, int a6, float a7)
 {
 	return nullptr;
+}
+
+#include "SDK/messages.hpp"
+#include "SDK/checks.hpp"
+
+typedef bool(HACK_THISCALL* fb__MessageManagerImpl__dispatchMessage)(HACK_THISPTR, fb::Message* message);
+fb__MessageManagerImpl__dispatchMessage o__fb__MessageManagerImpl__dispatchMessage = 0;
+bool HACK_FASTCALL hkfb__MessageManagerImpl__dispatchMessage(HACK_FAST_ARGS, fb::Message* message)
+{
+	const auto type = message->GetType();
+	if (const auto infoData = type->m_InfoData; isValidPtr(infoData))
+	{
+		if (infoData->m_Name)
+		{
+			/*
+			*	you can alloc own message directly here
+			*	most stuff here will be syncing client to server etc...
+			*/
+		}
+	}
+
+	return o__fb__MessageManagerImpl__dispatchMessage(thisptr, message);
 }
 
 #include <stdio.h>
@@ -43,6 +65,7 @@ if(hook__##func != MH_OK) { printf("%s failed, %s", #func, MH_StatusToString(hoo
 bool hooks::init()
 {
 	CREATE_SAFE_HOOK(0x01338C70, hkfb__suppressEnemies, o__fb__suppressEnemies);
+	CREATE_SAFE_HOOK(0x005495E0, hkfb__MessageManagerImpl__dispatchMessage, o__fb__MessageManagerImpl__dispatchMessage);
 
 	return true;
 }
