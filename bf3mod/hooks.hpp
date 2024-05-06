@@ -2,7 +2,7 @@
 
 namespace hooks
 {
-	bool install();
 	bool init();
+	bool create();
 	bool shutdown();
 }

@@ -20,10 +20,10 @@ DWORD WINAPI HackInitThread([[maybe_unused]] LPVOID)
     MemPatch(0x01117A50, "\xC3", 1); // PBSdk_DropClient
     MemPatch(0x01106990, "\xC3", 1); // PB CL log spam
 
-    if (!hooks::install())
+    if (!hooks::init())
         return HACK_RET_FAIL;
 
-    if (hooks::init())
+    if (hooks::create())
         return HACK_RET_FAIL;
 
     return HACK_RET_OK;

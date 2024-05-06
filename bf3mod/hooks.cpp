@@ -2,7 +2,7 @@
 
 #include <MinHook.h>
 
-bool hooks::install()
+bool hooks::init()
 {
 	if (MH_Initialize() != MH_OK)
 		return false;
@@ -62,7 +62,7 @@ bool HACK_FASTCALL hkfb__MessageManagerImpl__dispatchMessage(HACK_FAST_ARGS, fb:
 auto hook__##func = MH_CreateHook((LPVOID)addr, func, (LPVOID*)&original); \
 if(hook__##func != MH_OK) { printf("%s failed, %s", #func, MH_StatusToString(hook__##func)); return FALSE; }
 
-bool hooks::init()
+bool hooks::create()
 {
 	CREATE_SAFE_HOOK(0x01338C70, hkfb__suppressEnemies, o__fb__suppressEnemies);
 	CREATE_SAFE_HOOK(0x005495E0, hkfb__MessageManagerImpl__dispatchMessage, o__fb__MessageManagerImpl__dispatchMessage);
