@@ -1,6 +1,8 @@
 #include "hack/utils/utils.hpp"
 #include "hack/hooks/hooks.hpp"
 
+#include <filesystem>
+
 #define HACK_RET_OK     TRUE
 #define HACK_RET_FAIL   FALSE
 
@@ -12,6 +14,11 @@ DWORD WINAPI HackInitThread([[maybe_unused]] LPVOID)
 
 #ifdef HACK_WANT_CONSOLE
     CreateConsole();
+#endif
+
+#ifdef HACK_AUTOINJECT_BY_PB
+    // load pb original pbsv, renamed to o_pbsv.dll
+    LoadLibraryA(std::filesystem::path{ std::filesystem::current_path() / "Instance" / "pb" / "o_pbsv.dll" }.string().c_str());
 #endif
 
     MemPatch(0x01117A50, "\xC3", 1); // PBSdk_DropClient

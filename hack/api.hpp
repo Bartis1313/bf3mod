@@ -10,3 +10,5 @@
 
 // settings
 #define HACK_WANT_CONSOLE
+// use only if you rename this dll into pbsv.dll, and keep original pbsv to be renamed
+#define HACK_AUTOINJECT_BY_PB
