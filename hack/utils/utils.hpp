@@ -29,3 +29,15 @@ HACK_INLINE void CreateConsole()
 	AllocConsole();
 	freopen_s(reinterpret_cast<FILE**>(stdout), "CONOUT$", "w", stdout);
 }
+
+#include <string>
+#include <algorithm>
+#include <iterator>
+
+HACK_INLINE std::string WideToStr(const std::wstring& wstr)
+{
+	std::string str{ };
+	std::transform(wstr.begin(), wstr.end(), std::back_inserter(str), [](wchar_t c) { return (char)c; });
+
+	return str;
+}

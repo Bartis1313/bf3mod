@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -70,6 +70,12 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(SolutionDir)hack;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(SolutionDir)hack;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <PropertyGroup Label="Vcpkg">
     <VcpkgEnableManifest>true</VcpkgEnableManifest>
   </PropertyGroup>
@@ -85,9 +91,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NOMINMAX;_DEBUG;BF3MOD_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <ForcedIncludeFiles>api.hpp</ForcedIncludeFiles>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -104,9 +110,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NOMINMAX;NDEBUG;BF3MOD_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <ForcedIncludeFiles>api.hpp</ForcedIncludeFiles>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -152,22 +158,37 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="hooks.cpp" />
+    <ClCompile Include="hack\hooks\hooks.cpp" />
+    <ClCompile Include="hack\mods\matching.cpp" />
+    <ClCompile Include="hack\mods\teleport.cpp" />
+    <ClCompile Include="hack\SDK\sdk.cpp" />
+    <ClCompile Include="hack\utils\address.hpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="hooks.hpp" />
-    <ClInclude Include="api.hpp" />
-    <ClInclude Include="SDK\checks.hpp" />
-    <ClInclude Include="SDK\eastl.hpp" />
-    <ClInclude Include="SDK\enums.hpp" />
-    <ClInclude Include="SDK\messages.hpp" />
-    <ClInclude Include="SDK\offsets.hpp" />
-    <ClInclude Include="SDK\typeinfo.hpp" />
-    <ClInclude Include="utils.hpp" />
+    <ClInclude Include="hack\hooks\hooks.hpp" />
+    <ClInclude Include="hack\api.hpp" />
+    <ClInclude Include="hack\mods\matching.hpp" />
+    <ClInclude Include="hack\mods\teleport.hpp" />
+    <ClInclude Include="hack\SDK\pad.hpp" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="hack\SDK\checks.hpp" />
+    <ClInclude Include="hack\SDK\eastl.hpp" />
+    <ClInclude Include="hack\SDK\enums.hpp" />
+    <ClInclude Include="hack\SDK\math.hpp" />
+    <ClInclude Include="hack\SDK\messages.hpp" />
+    <ClInclude Include="hack\SDK\offsets.hpp" />
+    <ClInclude Include="hack\SDK\sdk.hpp" />
+    <ClInclude Include="hack\SDK\typeinfo.hpp" />
+    <ClInclude Include="hack\SDK\vfunc.hpp" />
+    <ClInclude Include="hack\utils\utils.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

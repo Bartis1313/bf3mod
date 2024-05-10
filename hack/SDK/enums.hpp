@@ -84,4 +84,15 @@ namespace fb
 		Weapon_Grenade = 0x6,
 		Weapon_Knife = 0x7,
 	};
+
+	enum ChatChannelType
+	{
+		CctSayAll = 0x0,
+		CctTeam = 0x1,
+		CctSquad = 0x2,
+		CctSquadLeader = 0x3,
+		CctAdmin = 0x4,
+		CctSize = 0x5,
+	};
+
 }

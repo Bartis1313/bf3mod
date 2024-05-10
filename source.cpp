@@ -1,8 +1,5 @@
-#define WIN32_LEAN_AND_MEAN 
-#include <Windows.h>
-
-#include "utils.hpp"
-#include "hooks.hpp"
+#include "hack/utils/utils.hpp"
+#include "hack/hooks/hooks.hpp"
 
 #define HACK_RET_OK     TRUE
 #define HACK_RET_FAIL   FALSE
